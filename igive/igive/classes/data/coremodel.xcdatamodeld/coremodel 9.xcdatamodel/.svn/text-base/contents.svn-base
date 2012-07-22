@@ -1,0 +1,51 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<model name="" userDefinedModelVersionIdentifier="" type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="1487" systemVersion="12A269" minimumToolsVersion="Xcode 4.3" macOSVersion="Automatic" iOSVersion="Automatic">
+    <entity name="Category" representedClassName="Category" syncable="YES">
+        <attribute name="color" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="Charity" representedClassName="Charity" syncable="YES">
+        <attribute name="affected_ratio" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="affected_total" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="amount_todate" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="countrycode" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="date_created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="date_updated" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="donators" optional="YES" attributeType="Integer 16" defaultValueString="0" syncable="YES"/>
+        <attribute name="favourite" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="information" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="problem" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="solution" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="weburl" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="CharityCategory" representedClassName="CharityCategory" syncable="YES">
+        <attribute name="date_created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="primary" optional="YES" attributeType="Boolean" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="Integer 64" defaultValueString="0" indexed="YES" syncable="YES"/>
+        <attribute name="uid_category" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="uid_charity" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+    </entity>
+    <entity name="Country" representedClassName="Country" syncable="YES">
+        <attribute name="smscode" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="title" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" syncable="YES"/>
+    </entity>
+    <entity name="Donation" representedClassName="Donation" syncable="YES">
+        <attribute name="affected_count" optional="YES" attributeType="Float" defaultValueString="0" syncable="YES"/>
+        <attribute name="amount" optional="YES" attributeType="Float" defaultValueString="0.0" syncable="YES"/>
+        <attribute name="date_created" optional="YES" attributeType="Date" syncable="YES"/>
+        <attribute name="reference" optional="YES" attributeType="String" syncable="YES"/>
+        <attribute name="uid" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+        <attribute name="uid_charity" optional="YES" attributeType="String" indexed="YES" syncable="YES"/>
+    </entity>
+    <elements>
+        <element name="Category" positionX="160" positionY="192" width="128" height="75"/>
+        <element name="Charity" positionX="160" positionY="192" width="128" height="255"/>
+        <element name="CharityCategory" positionX="160" positionY="192" width="128" height="120"/>
+        <element name="Country" positionX="160" positionY="192" width="128" height="90"/>
+        <element name="Donation" positionX="160" positionY="192" width="128" height="135"/>
+    </elements>
+</model>

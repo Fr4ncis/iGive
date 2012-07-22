@@ -1,0 +1,41 @@
+//
+//  MyViewController.h
+//  igive
+//
+//  Created by Francesco Mattia on 7/21/12.
+//  Copyright (c) 2012 Im-At-Home BV. All rights reserved.
+//
+
+#import <UIKit/UIKit.h>
+
+@interface ResultsListViewController : UIViewController <UITableViewDelegate, UITableViewDataSource> {
+    
+    IBOutlet UITableView *_tableViewResults;
+
+@private
+    
+    NSArray *_resultSetCategories;
+    NSArray *_resultSetCharities;
+    
+}
+
+    - (IBAction)pullButtonDragged:(id)sender;
+    - (IBAction)closeButtonPressed:(id)sender;
+
+@end
+
+@protocol ResultsListDelegate <NSObject>
+
+@optional
+
+    - (void) viewDragged;
+    - (void) viewClosed;
+
+@end
+
+@interface ResultsListViewController ()
+
+    @property (nonatomic, retain) IBOutlet id<ResultsListDelegate>delegate;
+
+
+@end

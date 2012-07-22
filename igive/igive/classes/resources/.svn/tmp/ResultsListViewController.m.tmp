@@ -1,0 +1,178 @@
+//
+//  MyViewController.m
+//  igive
+//
+//  Created by Francesco Mattia on 7/21/12.
+//  Copyright (c) 2012 Im-At-Home BV. All rights reserved.
+//
+
+#import "ResultsListViewController.h"
+
+#import "Charity.h"
+#import "Category.h"
+
+typedef enum {
+    
+    kTableForCategories = 0,
+    kTableForCharities = 1
+    
+} kTableFor;
+
+@interface ResultsListViewController ()
+
+@end
+
+@implementation ResultsListViewController
+@synthesize delegate;
+@synthesize categoriesViewController;
+
+BOOL shown = NO;
+BOOL categoriesShown = NO;
+
+- (id) init
+{
+    self = [super initWithNibName:@"ResultsListViewController" bundle:nil];
+    if (self) {
+        _resultSetCategories = [Category all];
+        _resultSetCharities = [Charity all];
+    }
+    return self;
+}
+
+- (id) initWithNibName:(NSString *)nibNameOrNil bundle:(NSBundle *)nibBundleOrNil
+{
+    self = [super initWithNibName:nibNameOrNil bundle:nibBundleOrNil];
+    if (self) {
+        // Custom initialization
+    }
+    return self;
+}
+
+- (void) viewDidLoad
+{
+    [super viewDidLoad];
+    // Do any additional setup after loading the view from its nib.
+    
+    if (!categoriesViewController) {
+        categoriesViewController = [[CategoriesViewController alloc] init];
+        //categoriesViewController.delegate = self;
+        categoriesViewController.view.frame = CGRectMake(-categoriesViewController.view.frame.size.width, 43, categoriesViewController.view.frame.size.width, categoriesViewController.view.frame.size.height);
+        [self.view addSubview:categoriesViewController.view];
+    }
+}
+
+- (void) viewDidUnload
+{
+    [super viewDidUnload];
+    // Release any retained subviews of the main view.
+    // e.g. self.myOutlet = nil;
+}
+
+- (BOOL) shouldAutorotateToInterfaceOrientation:(UIInterfaceOrientation)interfaceOrientation
+{
+    return (interfaceOrientation == UIInterfaceOrientationPortrait);
+}
+
+- (IBAction) pullButtonDragged:(id)sender {
+    if (shown) {
+        shown = NO;
+        [delegate viewClosed];
+    } else {
+        shown = YES;
+        [delegate viewDragged];
+    }
+}
+
+- (IBAction)categoriesButtonPressed:(id)sender {
+    if (shown) {
+        if (categoriesShown) {
+            [UIView animateWithDuration:0.5 animations:^{
+                self.view.frame = CGRectMake(0, -43, self.view.frame.size.width, self.view.frame.size.height);
+            } completion:^(BOOL finished) {
+                categoriesShown = NO;
+            }];
+        } else {
+            [UIView animateWithDuration:0.5 animations:^{
+                self.view.frame = CGRectMake(categoriesViewController.view.frame.size.width, -43, self.view.frame.size.width, self.view.frame.size.height);
+            } completion:^(BOOL finished) {
+                categoriesShown = YES;
+            }];
+        }
+    }
+}
+
+    - (NSInteger) tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section
+    {
+        switch ((kTableFor)tableView.tag) {
+            case kTableForCategories: {
+                return _resultSetCategories.count;
+                break;
+            }
+            case kTableForCharities: {
+                return _resultSetCharities.count;
+                break;
+            }
+            default:
+                break;
+        }
+        return 0;
+    }
+
+    - (UITableViewCell *) tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath
+    {
+        UITableViewCell *_cell = nil;
+        
+        switch ((kTableFor)tableView.tag) {
+                
+            case kTableForCategories: {
+                
+                _cell = [tableView dequeueReusableCellWithIdentifier:@"cellCategoryCell"];
+                
+                UILabel *_labelCategory = nil;
+                UILabel *_labelNumberOfCharities = nil;
+                
+                Category *_category = (Category *)[_resultSetCategories objectAtIndex:indexPath.row];
+                
+                if (!_cell) {
+                    
+                    _cell = [[UITableViewCell alloc] initWithStyle:UITableViewCellStyleDefault reuseIdentifier:@"cellCategoryCell"];
+                    
+                    _labelCategory = [[UILabel alloc] initWithFrame:CGRectMake(10.0f, 2.0f, tableView.frame.size.width-50.0f, 20.0f)];
+                    _labelCategory.tag = 1;
+                    
+                    _labelCategory.font = [UIFont systemFontOfSize:14.0f];
+                    _labelCategory.textColor = [UIColor redColor];
+                
+                    [_cell.contentView addSubview:_labelCategory];
+                    
+                    _labelNumberOfCharities = [[UILabel alloc] initWithFrame:CGRectMake(tableView.frame.size.width-40.0f, 2.0f, 20.0f, 20.0f)];
+                    _labelNumberOfCharities.tag = 2;
+                    
+                    _labelNumberOfCharities.font = [UIFont systemFontOfSize:14.0f];
+                    _labelNumberOfCharities.textColor = [UIColor redColor];
+                    
+                    [_cell.contentView addSubview:_labelNumberOfCharities];
+                    
+                } else {
+
+                    _labelCategory = (UILabel *)[_cell viewWithTag:1];
+                    _labelNumberOfCharities = (UILabel *)[_cell viewWithTag:2];
+
+                }
+                
+                _labelCategory.text = _category.title;
+                _labelNumberOfCharities.text = [NSString stringWithFormat:@"%d",_category.charities.count];
+                
+                break;
+            }
+            case kTableForCharities: {
+                
+                break;
+            }
+                
+        }
+                
+        return _cell;
+    }
+
+@end
